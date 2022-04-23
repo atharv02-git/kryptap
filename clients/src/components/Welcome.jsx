@@ -22,17 +22,16 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 );
 
 export default function Welcome() {
-  const { value } = useContext(TransactionContext);
-  
-  console.log(value)
-
-  const connectWallet = () => {
-    console.log("conne Wallet button Clicked!!!");
-  };
+  const { connectWallet, currentAccount, formData, sendTransaction, handleChange } = useContext(TransactionContext);
 
   const handleSubmit = (e) => {
-    console.log("Form Submitted!!!")
+    const { addressTo, amount, keyword, message } = formData;
+
     e.preventDefault()
+
+    if(!addressTo || !amount || !keyword || !message) return;
+
+    sendTransaction();
   } 
   return (
     <div className="flex w-full justify-center items-center">
@@ -47,14 +46,16 @@ export default function Welcome() {
           </p>
 
           {/* Connect Wallet BUtton */}
-          <button
-            type="button"
-            onClick={connectWallet}
-            className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
-          >
-            <AiFillPlayCircle className="text-white mr-2" />
-            <p className="text-white text-base font-semibold">Connect Wallet</p>
-          </button>
+          {!currentAccount && (
+            <button
+              type="button"
+              onClick={connectWallet}
+              className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
+            >
+              <AiFillPlayCircle className="text-white mr-2" />
+              <p className="text-white text-base font-semibold">Connect Wallet</p>
+            </button>
+          )}
 
           {/* App features in the GRID format*/}
           <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
@@ -99,25 +100,25 @@ export default function Welcome() {
               placeholder="Address To"
               name="addressTo"
               type="text"
-              handleChange={() => {}}
+              handleChange={handleChange}
             />
             <Input
               placeholder="Amount (ETH)"
               name="amount"
               type="number"
-              handleChange={() => {}}
+              handleChange={handleChange}
             />
             <Input
               placeholder="Keyword (Gif)"
               name="keyword"
               type="text"
-              handleChange={() => {}}
+              handleChange={handleChange}
             />
             <Input
               placeholder="Enter Message"
               name="message"
               type="text"
-              handleChange={() => {}}
+              handleChange={handleChange}
             />
 
             <div className="h-[1px] w-full bg-gray-400 my-2" />
