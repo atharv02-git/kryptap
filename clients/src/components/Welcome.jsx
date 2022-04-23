@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 // Importing all the necessary icons
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 
+import { TransactionContext } from "../context/TransactionContext";
 import { Loader } from ".";
 
 const companyCommonStyles =
@@ -21,6 +22,10 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 );
 
 export default function Welcome() {
+  const { value } = useContext(TransactionContext);
+  
+  console.log(value)
+
   const connectWallet = () => {
     console.log("conne Wallet button Clicked!!!");
   };
